@@ -32,7 +32,7 @@ serviceAccount:
   create: true
   name: ecr-creds-sa
   annotations:
-    eks.amazonaws.com/role-arn: <arn:irsa_arn>
+    eks.amazonaws.com/role-arn: <irsa_arn>
 targetPullSecretName: ecr-registry
 targetNamespaces:
   - kube-addons
