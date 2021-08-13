@@ -1,4 +1,5 @@
 apiVersion: v2
+icon: https://zbytes.github.io/img/logo.png
 name: ecr-creds
 description: A Helm chart for Kubernetes with AWS ECR
 type: application

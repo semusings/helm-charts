@@ -27,8 +27,8 @@ spec:
   template:
     spec:
       imagePullSecrets:
-        - name: aws-registry
+        - name: my-regcred
     containers:
-      - name: node
-        image: node:latest
+      - name: pod-name
+        image: pod-image:latest
 ```
