@@ -15,8 +15,8 @@ version: 1.0.1
 appVersion: 1.0.0
 
 maintainers:
-  - email: er.bhuwan.upadhyay@gmail.com
-    name: Bhuwan Prasad Upadhyay
+  - name: zbytes
+    email: er.bhuwan.upadhyay@gmail.com
     url: https://bhuwanupadhyay.github.io/cv/
 keywords:
   - aws ecr
