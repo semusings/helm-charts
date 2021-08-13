@@ -1,6 +1,11 @@
 # ⎈ Helm Charts ⎈
 My collection of [Helm](https://helm.sh/) charts.
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/zbytes&style=for-the-badge)](https://artifacthub.io/packages/search?repo=zbytes)
+[![Release Charts](https://img.shields.io/github/workflow/status/zbytes/helm-charts/Release%20Charts?label=ci&style=for-the-badge)](https://github.com/zbytes/helm-charts/actions/workflows/charts-release.yaml)
+[![GitHub](https://img.shields.io/github/license/zbytes/helm-charts?style=for-the-badge)](https://github.com/zbytes/helm-charts/blob/main/LICENSE)
+[![GitHub all releases](https://img.shields.io/github/downloads/zbytes/helm-charts/total?style=for-the-badge)](https://github.com/zbytes/helm-charts/releases)
+
 ---
  
 ## :book: Usage
