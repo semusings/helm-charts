@@ -26,8 +26,8 @@ targetPullSecretName: ecr-registry
 targetNamespaces: []
 
 aws:
-  account: ""
-  region: ""
-  accessKeyId: ""
-  secretAccessKey: ""
+  account: "<aws_account_id>"
+  region: "<aws_region>"
+  accessKeyId: "<access_key_id>"
+  secretAccessKey: "<secret_access_key>"
 # ===================================================
