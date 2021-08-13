@@ -10,13 +10,14 @@ Run the following command to install this chart
 helm install --name ecr-creds zbytes/ecr-creds \
 --set-string aws.account=<aws_account_id> \
 --set aws.region=<aws_region> \
---set aws.accessKeyId=<base64> \
---set aws.secretAccessKey=<base64> \
+--set aws.accessKeyId=<accessKeyId> \
+--set aws.secretAccessKey=<secretAccessKey> \
 --set targetPullSecretName=my-regcred \
---set targetNamespace=['default']
+--set targetNamespaces[0]=kube-system \
+--set targetNamespaces[1]=kube-addons
 ```
 
-In you kubernetes deployment use imagePullSecrets: my-regcred.
+In you kubernetes deployment use `imagePullSecrets: my-regcred`
 
 Example:
 
