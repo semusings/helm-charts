@@ -45,42 +45,6 @@ jobs:
           echo "::set-output name=detected::true"
         fi
 
-  changes-install:
-    if: "!contains(github.event.head_commit.message, '[ci-skip]')"
-    name: Detect changes for install
-    runs-on: ubuntu-20.04
-    outputs:
-      matrix: |
-        {
-          "chart": ${{ steps.list-changed.outputs.charts }}
-        }
-      detected: ${{ steps.list-changed.outputs.detected }}
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2.3.4
-      with:
-        fetch-depth: 0
-
-    - name: Set up chart-testing
-      uses: helm/chart-testing-action@v2.1.0
-
-    - name: Install Dev tools
-      run: |
-        sudo wget https://github.com/mikefarah/yq/releases/download/v4.2.0/yq_linux_amd64 -O /usr/bin/yq
-        sudo chmod +x /usr/bin/yq
-
-    - name: Run chart-testing (list-changed)
-      id: list-changed
-      run: |
-        EXCLUDED=$(yq eval -j '.excluded-charts // []' .github/ct-install.yaml)
-        CHARTS=$(ct list-changed --config .github/ct-install.yaml)
-        CHARTS_JSON=$(echo "${CHARTS}" | jq -R -s -c 'split("\n")[:-1]')
-        OUTPUT_JSON=$(echo "{\"excluded\": ${EXCLUDED}, \"all\": ${CHARTS_JSON}}" | jq -c '.all-.excluded')
-        echo ::set-output name=charts::${OUTPUT_JSON}
-        if [[ $(echo ${OUTPUT_JSON} | jq -c '. | length') -gt 0 ]]; then
-          echo "::set-output name=detected::true"
-        fi
-
   lint:
     needs:
     - changes-lint
