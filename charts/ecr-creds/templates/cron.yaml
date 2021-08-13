@@ -69,4 +69,3 @@ spec:
               {{- end }}
 
               kubectl patch serviceaccount default -p '{"imagePullSecrets":[{"name":"$PULL_SECRET_NAME"}]}'
-
