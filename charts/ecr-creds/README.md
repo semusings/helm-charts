@@ -55,7 +55,7 @@ spec:
   template:
     spec:
       imagePullSecrets:
-        - name: my-regcred
+        - name: ecr-registry
     containers:
       - name: pod-name
         image: pod-image:latest
