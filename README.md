@@ -32,4 +32,4 @@ See [artifact hub](https://artifacthub.io/packages/search?repo=zbytes) for a com
 
 ## :pencil: Author
 
-This project was started in 2020 by [Bhuwan Prasad Upadhyay](https://github.com/zbytes/).
+This project was started in 2021 by [Bhuwan Prasad Upadhyay](https://github.com/zbytes/).
