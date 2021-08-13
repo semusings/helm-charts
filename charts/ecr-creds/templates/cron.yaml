@@ -27,6 +27,7 @@ spec:
           - name: kubectl
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: {{ .Values.image.pullPolicy }}
+            {{- if "ecr-creds.createSecret" }}
             env:
               - name: AWS_ACCESS_KEY_ID
                 valueFrom:
@@ -38,6 +39,7 @@ spec:
                   secretKeyRef:
                     name: {{ include "ecr-creds.fullname" . }}
                     key: AWS_SECRET_ACCESS_KEY
+            {{- end }}
             command:
             - "/bin/sh"
             - "-c"
@@ -45,8 +47,6 @@ spec:
               AWS_ACCOUNT={{ .Values.aws.account }}
               AWS_REGION={{ .Values.aws.region }}
               PULL_SECRET_NAME={{ .Values.targetPullSecretName }}
-              echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
-              echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
               echo "AWS_ACCOUNT=$AWS_ACCOUNT"
               echo "AWS_REGION=$AWS_REGION"
               echo "PULL_SECRET_NAME=$PULL_SECRET_NAME"
@@ -57,7 +57,6 @@ spec:
 
               echo "DOCKER_REGISTRY_SERVER=$DOCKER_REGISTRY_SERVER"
               echo "DOCKER_USER=$DOCKER_USER"
-              echo "DOCKER_PASSWORD=$DOCKER_PASSWORD"
 
               {{- range .Values.targetNamespaces }}
               kubectl delete secret --namespace {{ . }} $PULL_SECRET_NAME || true

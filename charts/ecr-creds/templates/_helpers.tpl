@@ -61,3 +61,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Return true if a secret object should be created
+*/}}
+{{- define "ecr-creds.createSecret" -}}
+{{- if and .Values.aws.credentials.secretKey .Values.aws.credentials.accessKey }}
+    {{- true -}}
+{{- else -}}
+{{- end -}}
+{{- end -}}
