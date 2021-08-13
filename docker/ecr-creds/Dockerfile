@@ -1,5 +1,5 @@
 FROM python:alpine
-LABEL maintainer="Bhuwan Prasad Upadhyay <bot.bhuwan@gmail.com>"
+LABEL maintainer="Bhuwan Prasad Upadhyay <er.bhuwan.upadhyay@gmail.com>"
 
 RUN apk --no-cache add curl
 

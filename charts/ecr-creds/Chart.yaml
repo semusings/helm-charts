@@ -15,8 +15,9 @@ version: 1.0.1
 appVersion: 1.0.0
 
 maintainers:
-  - email: bot.bhuwan@gmail.com
+  - email: er.bhuwan.upadhyay@gmail.com
     name: Bhuwan Prasad Upadhyay
+    url: https://bhuwanupadhyay.github.io/cv/
 keywords:
   - aws ecr
   - imagePullSecrets
