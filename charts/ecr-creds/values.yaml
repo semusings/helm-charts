@@ -13,8 +13,6 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.
@@ -26,8 +24,9 @@ targetPullSecretName: ecr-registry
 targetNamespaces: []
 
 aws:
-  account: "<aws_account_id>"
-  region: "<aws_region>"
-  accessKeyId: "<access_key_id>"
-  secretAccessKey: "<secret_access_key>"
+  account: ""
+  region: ""
+  credentials:
+    accessKey: ""
+    secretKey: ""
 # ===================================================
