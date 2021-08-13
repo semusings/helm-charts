@@ -44,7 +44,7 @@ EOF
 helm install --name ecr-creds zbytes/ecr-creds --values sa-values.yaml
 ```
 
-In you kubernetes deployment use `imagePullSecrets: my-regcred`
+In you kubernetes deployment use `imagePullSecrets: ecr-registry`
 
 Example:
 
