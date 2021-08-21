@@ -21,7 +21,7 @@ aws:
     secretKey: "xxx"
 EOF
 
-helm install --name ecr-creds zbytes/ecr-creds --values values.yaml
+helm install ecr-creds zbytes/ecr-creds --values values.yaml
 ```
 
 - Using IRSA
@@ -41,7 +41,7 @@ aws:
   region: "us-east-1"
 EOF
 
-helm install --name ecr-creds zbytes/ecr-creds --values sa-values.yaml
+helm install ecr-creds zbytes/ecr-creds --values sa-values.yaml
 ```
 
 In you kubernetes deployment use `imagePullSecrets: ecr-registry`
