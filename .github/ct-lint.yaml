@@ -8,4 +8,4 @@ excluded-charts:
   - charts/common
 chart-repos:
   - bitnami=https://charts.bitnami.com/bitnami
-  - zbytes=https://zbytes.github.io/helm-charts
+  - bhuwanupadhyay=https://bhuwanupadhyay.github.io/helm-charts
