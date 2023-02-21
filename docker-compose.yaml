@@ -1,7 +1,0 @@
-version: "3.0"
-services:
-  ecr-creds:
-    image: docker.io/bhuwanupadhyay/ecr-creds:1.0.0
-    build:
-      context: docker/ecr-creds
-      dockerfile: Dockerfile
