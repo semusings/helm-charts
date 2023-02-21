@@ -2,7 +2,6 @@
 version: '3'
 
 vars:
-  URL_TEMPLATE: "https://github.com/bhuwanupadhyay/helm-template.git"
   GIT_ROOT:
     sh: "git rev-parse --show-toplevel"
 
@@ -11,8 +10,10 @@ tasks:
   create:
     desc: Create a new chart
     cmds:
-      - test -n "{{ .IMAGE }}" || (echo "Please define IMAGE parameter"; exit 1)
-      - ./scripts/init.sh {{ .IMAGE }}
+      - mkdir -p {{.GIT_ROOT}}/charts/{{.CHART}}
+      - cp -R ./template/* {{.GIT_ROOT}}/charts/{{.CHART}}/
+      - cp -R ./charts/common/README.md.gotmpl {{.GIT_ROOT}}/charts/{{.CHART}}/README.md.gotmpl
+      - cp -R ./charts/common/values.schema.json {{.GIT_ROOT}}/charts/{{.CHART}}/values.schema.json
       - task: _dependency
       - echo "Congratulations, charts/{{.CHART}} successfully generated, you can now edit chart informations ( Chart.yaml and values.yaml )"
     status:
