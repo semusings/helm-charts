@@ -36,4 +36,4 @@ Also don't be worried if the request is closed or not integrated sometimes our p
 - [ ] Title of the PR starts with chart name (e.g. `[home-assistant]`)
 - [ ] README.md was updated with [helm-docs](https://github.com/norwoodj/helm-docs)
 - [ ] 
-<!-- Keep in mind that if you are submitting a new chart, try to use our [common](https://github.com/k8s-at-home/charts/tree/master/charts/common) library as a dependency. This will help maintaining charts here and keep them consistent between each other -->
+<!-- Keep in mind that if you are submitting a new chart, try to use our [common](https://github.com/bhuwanupadhyay/charts/tree/main/charts/common) library as a dependency. This will help maintaining charts here and keep them consistent between each other -->

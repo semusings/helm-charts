@@ -7,7 +7,7 @@ version: 0.0.1
 keywords:
   - bhuwanupadhyay
   - common
-home: https://github.com/bhuwanupadhyay/helm-charts/tree/master/charts/common
+home: https://github.com/bhuwanupadhyay/helm-charts/tree/main/charts/common
 maintainers:
   - name: bhuwanupadhyay
     email: hi@bhuwanupadhyay.com
