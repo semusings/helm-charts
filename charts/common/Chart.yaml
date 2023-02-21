@@ -1,0 +1,17 @@
+---
+apiVersion: v2
+name: common
+description: Function library for bhuwanupadhyay's helm charts
+type: library
+version: 0.0.1
+keywords:
+  - bhuwanupadhyay
+  - common
+home: https://github.com/bhuwanupadhyay/helm-charts/tree/main/charts/common
+maintainers:
+  - name: bhuwanupadhyay
+    email: hi@bhuwanupadhyay.com
+annotations:
+  artifacthub.io/changes: |
+    - kind: added
+      description: Initial release.

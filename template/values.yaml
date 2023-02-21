@@ -1,0 +1,55 @@
+---
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/bhuwanupadhyay/helm-charts/tree/main/charts/common/values.yaml
+#
+
+image:
+  repository: template
+  pullPolicy: IfNotPresent
+  tag: ""
+
+secret: {}
+
+# See more environment variables in the template documentation
+# https://template.org/docs
+env: {}
+  # TZ: ""
+
+service:
+  port:
+    port: 80
+
+ingress:
+  enabled: false
+
+persistence:
+  config:
+    enabled: false
+    emptyDir: false
+    mountPath: /config
+
+# Enable mariadb
+# https://github.com/bhuwanupadhyay/helm-charts/blob/main/charts/mariadb/values.yaml
+mariadb:
+  enabled: false
+  secret:
+    MYSQL_ROOT_PASSWORD: "template-pass"
+    MYSQL_PASSWORD: "template-pass"
+  env:
+    MYSQL_USER: "template"
+    MYSQL_DATABASE: "template-mariadb"
+  fullnameOverride: template-mariadb
+
+# Enable postgres
+# https://github.com/bhuwanupadhyay/helm-charts/blob/main/charts/postgres/values.yaml
+postgres:
+  enabled: false
+  secret:
+    POSTGRES_PASSWORD: "template-pass"
+  env:
+    POSTGRES_USER: "template"
+    POSTGRES_DB: "template-postgres"
+  fullnameOverride: template-postgres
