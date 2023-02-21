@@ -1,2 +1,24 @@
 apiVersion: v1
-entries: {}
+entries:
+  common:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Initial release.
+    apiVersion: v2
+    created: "2023-02-21T21:30:04.90819898Z"
+    description: Function library for bhuwanupadhyay's helm charts
+    digest: b2470788ff01b19e99540b4dc9cef7f7b3e177c1c9b22c061bce44a65e905d73
+    home: https://github.com/bhuwanupadhyay/helm-charts/tree/main/charts/common
+    keywords:
+    - bhuwanupadhyay
+    - common
+    maintainers:
+    - email: hi@bhuwanupadhyay.com
+      name: bhuwanupadhyay
+    name: common
+    type: library
+    urls:
+    - https://github.com/bhuwanupadhyay/helm-charts/releases/download/common-0.0.1/common-0.0.1.tgz
+    version: 0.0.1
+generated: "2023-02-21T21:30:04.90820818Z"
