@@ -2,7 +2,7 @@
 version: '3'
 
 includes:
-  deps: ./.taskfiles/deps.yaml
+  tools: ./.taskfiles/tools.yaml
   chart: ./.taskfiles/chart.yaml
 
 tasks:
