@@ -1,85 +1,45 @@
-# template
+# keycloak
 
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 20.0.5](https://img.shields.io/badge/AppVersion-20.0.5-informational?style=flat-square)
 
 A Helm chart for Keycloak
 
-Since a lot of charts follow the same pattern this library was built to reduce maintenance cost between the charts that use it and try to achieve a goal of being DRY.
-
 ## TL;DR
 ```console
 $ helm repo add bhuwanupadhyay https://bhuwanupadhyay.github.io/helm-charts/
 $ helm repo update
-$ helm install template bhuwanupadhyay/template
+$ helm install keycloak bhuwanupadhyay/keycloak
 ```
 
-## Creating a new chart
-
-First be sure to checkout the many charts that already use this like [qBittorrent](../qbittorrent/), [node-red](../node-red/) or the many others in this repository.
-
-Include this chart as a dependency in your `Chart.yaml` e.g.
-
-```yaml
-# Chart.yaml
-dependencies:
-  - name: common
-    version: 1.0.0
-    repository: https://bhuwanupadhyay.github.io/helm-charts/
-```
-Write a `values.yaml` with some basic defaults you want to present to the user e.g.
-
-```yaml
-# Default values for node-red.
-
-image:
-  repository: nodered/node-red
-  pullPolicy: IfNotPresent
-  tag: 1.2.5
-
-strategy:
-  type: Recreate
-
-# See more environment varaibles in the node-red documentation
-# https://nodered.org/docs/getting-started/docker
-env: {}
-  # TZ:
-  # NODE_OPTIONS:
-  # NODE_RED_ENABLE_PROJECTS:
-  # NODE_RED_ENABLE_SAFE_MODE:
-  # FLOWS:
-
-service:
-  port:
-    port: 1880
-
-persistence:
-  data:
-    enabled: false
-    emptyDir: false
-    mountPath: /data
+## Installing the Chart
+To install the chart with the release name `keycloak`:
+```console
+helm install keycloak bhuwanupadhyay/keycloak
 ```
 
-If not using a service, set the `service.enabled` to `false`.
-```yaml
-...
-service:
-  enabled: false
-...
+## Uninstalling the Chart
+To uninstall the `keycloak` deployment:
+```console
+helm uninstall keycloak
+```
+The command removes all the Kubernetes components associated with the chart and deletes the release.
+
+## Configuration
+
+Read through the [values.yaml](./values.yaml) file. It has several commented out suggested values.
+Other values may be used from the [values.yaml](../common/values.yaml) from the [common library](../common).
+
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+```console
+helm install keycloak \
+  --set env.TZ="America/New York" \
+    bhuwanupadhyay/keycloak
 ```
 
-Add files to the `templates` folder.
-```yaml
-# templates/common.yaml
-{{ include "common.all . }}
-
-# templates/NOTES.txt
-{{ include "common.notes.defaultNotes" . }}
-```
-
-If testing locally make sure you update the dependencies with:
-
-```bash
-helm dependency update
+Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart.
+For example,
+```console
+helm install keycloak bhuwanupadhyay/keycloak -f values.yaml
 ```
 
 ----------------------------------------------
