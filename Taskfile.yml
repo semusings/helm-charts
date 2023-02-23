@@ -3,7 +3,7 @@ version: '3'
 
 includes:
   tools: ./.taskfiles/tools.yaml
-  chart: ./.taskfiles/chart.yaml
+  chart: ./.taskfiles/helm-chart.yaml
 
 tasks:
   default:

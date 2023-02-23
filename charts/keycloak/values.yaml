@@ -7,20 +7,31 @@
 #
 
 image:
-  repository: template
+  repository: quay.io/keycloak/keycloak
   pullPolicy: IfNotPresent
   tag: ""
 
-secret: {}
+# Override the default args
+args: ["start-dev"]
+
+secret: { }
 
 # See more environment variables in the template documentation
 # https://template.org/docs
-env: {}
-# TZ: ""
+env:
+  KEYCLOAK_ADMIN: admin
+  KEYCLOAK_ADMIN_PASSWORD: admin
+  KC_PROXY: "edge"
+
+envFrom:
+- configMapRef:
+    name: keycloak-envs
+- secretRef:
+    name: keycloak-envs
 
 service:
   port:
-    port: 80
+    port: 8080
 
 ingress:
   enabled: false
@@ -34,11 +45,12 @@ persistence:
 # Enable postgres
 # https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
 postgresql:
-  enabled: false
+  enabled: true
+  architecture: standalone
   global:
     postgresql:
       auth:
-        postgresPassword: "template-postgres-pass"
-        username: "template"
-        password: "template-pass"
-        database: "template-db"
+        postgresPassword: keycloak-postgres
+        username: keycloak
+        database: keycloak
+        password: keycloak

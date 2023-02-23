@@ -92,6 +92,15 @@ tasks:
     deps:
       - _check-dir
 
+  helm-install:
+    desc: Run `helm install` on your chart code
+    dir: "{{.GIT_ROOT}}"
+    cmds:
+      - >-
+        helm upgrade --install {{.CHART}} charts/{{.CHART}} --namespace {{.CHART}} --create-namespace --wait --timeout 10m
+    deps:
+      - _check-dir
+
   _check-var:
     cmds:
       - test -n "{{ .CHART }}" || (echo "Please define CHART parameter"; exit 1)

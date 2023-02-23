@@ -115,12 +115,12 @@ service:
   type: ClusterIP
   # Specify the default port information
   port:
-    port:
+    port: 80
     # name defaults to http
-    name:
+    name: http
     protocol: TCP
     # targetPort defaults to http
-    targetPort:
+    targetPort: http
     ## Specify the nodePort value for the LoadBalancer and NodePort service types.
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ##
