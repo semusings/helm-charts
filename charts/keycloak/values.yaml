@@ -12,29 +12,63 @@ image:
   tag: ""
 
 # Override the default args
-args: ["start-dev"]
+args: [ "start" ]
 
 secret: { }
 
 # See more environment variables in the template documentation
-# https://template.org/docs
+# https://www.keycloak.org/server/all-config
 env:
   KEYCLOAK_ADMIN: admin
   KEYCLOAK_ADMIN_PASSWORD: admin
+  KC_HOSTNAME: keycloak.k8s.localdev
   KC_PROXY: "edge"
+  KC_HTTPS_CERTIFICATE_FILE: /config/keycloak-tls-keystore/tls.crt
+  KC_HTTPS_CERTIFICATE_KEY_FILE: /config/keycloak-tls-keystore/tls.key
+  KC_HOSTNAME_STRICT: "true"
+  KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+
+additionalVolumes:
+  - name: keycloak-tls-keystore
+    secret:
+      secretName: keycloak-tls-keystore
+
+additionalVolumeMounts:
+  - name: keycloak-tls-keystore
+    mountPath: /config/keycloak-tls-keystore
+    readOnly: true
 
 envFrom:
-- configMapRef:
-    name: keycloak-envs
-- secretRef:
-    name: keycloak-envs
+  - configMapRef:
+      name: keycloak-envs
+  - secretRef:
+      name: keycloak-envs
+
+externalDatabase:
+  enabled: false
+  type: postgres
+  host: keycloak-postgresql
+  port: 5432
+  database: keycloak
+  user: keycloak
+  password: keycloak
 
 service:
   port:
     port: 8080
 
 ingress:
-  enabled: false
+  enabled: true
+  #  kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: "keycloak.k8s.localdev"
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: [ ]
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
 
 persistence:
   config:

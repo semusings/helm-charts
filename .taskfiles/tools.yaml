@@ -26,6 +26,7 @@ tasks:
       - go-replace
       - semver-tool
       - yq
+      - mkcert
 
   helm:
     desc: Install helm client
@@ -88,6 +89,20 @@ tasks:
       - task: _path-notify
     status:
       - test -e .bin/yq
+    deps:
+      - _pre-reqs
+    silent: true
+
+  mkcert:
+    desc: Install mkcert
+    cmds:
+      - echo "Installing mkcert"
+      - mkdir -p ".bin"
+      - wget -q https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-{{ .DETECTED_OS }}-{{ .DETECTED_ARCH }} -O .bin/mkcert
+      - chmod +x .bin/mkcert
+      - task: _path-notify
+    status:
+      - test -e .bin/mkcert
     deps:
       - _pre-reqs
     silent: true

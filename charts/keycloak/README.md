@@ -4,6 +4,21 @@
 
 A Helm chart for Keycloak
 
+## Prerequisites
+
+Get the TLS certificate for the domain name `k8s.localdev` and create a secret for it.
+
+```bash
+mkcert k8s.localdev "*.k8s.localdev"
+```
+
+```bash
+kubectl create namespace keycloak-tls-keystore
+kubectl create secret tls -n keycloak keycloak-tls-keystore \
+  --cert ./k8s.localdev+1.pem \
+  --key ./k8s.localdev+1-key.pem
+```
+
 ## TL;DR
 ```console
 $ helm repo add bhuwanupadhyay https://bhuwanupadhyay.github.io/helm-charts/
