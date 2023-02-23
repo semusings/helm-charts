@@ -53,9 +53,12 @@ Other values may be used from the [values.yaml](../common/values.yaml) from the 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 ```console
 helm install {{ template "chart.name" . }} \
-  --set env.TZ="America/New York" \
+  --set env.KC_PROXY="edge" \
     {{ template "helm.path" . }}
 ```
+
+* Keycloak environment variables reference: https://www.keycloak.org/server/all-config
+
 {{- end -}}
 
 {{- define "configuration.example.file" -}}

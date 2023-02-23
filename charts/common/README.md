@@ -4,7 +4,7 @@
 
 Function library for bhuwanupadhyay's helm charts
 
-Since a lot of charts follow the same pattern this library was built to reduce maintenance cost between the charts that use it and try to achieve a goal of being DRY.
+Since a lot of charts follow the same pattern this library was built to reduce maintenance cost between the charts that use it and try achieve a goal of being DRY.
 
 ## TL;DR
 ```console

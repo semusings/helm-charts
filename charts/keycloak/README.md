@@ -32,9 +32,11 @@ Other values may be used from the [values.yaml](../common/values.yaml) from the 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 ```console
 helm install keycloak \
-  --set env.TZ="America/New York" \
+  --set env.KC_PROXY="edge" \
     bhuwanupadhyay/keycloak
 ```
+
+* Keycloak environment variables reference: https://www.keycloak.org/server/all-config
 
 Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart.
 For example,

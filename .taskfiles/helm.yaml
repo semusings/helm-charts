@@ -1,0 +1,31 @@
+---
+version: '3'
+
+vars:
+  GIT_ROOT:
+    sh: "git rev-parse --show-toplevel"
+
+tasks:
+
+  install:
+    desc: Run `helm install` on your chart code
+    dir: "{{.GIT_ROOT}}"
+    cmds:
+      - >-
+        helm upgrade --install {{.CHART}} charts/{{.CHART}} --namespace {{.CHART}} --create-namespace --wait --timeout 10m
+    deps:
+      - _pre-reqs
+
+  delete:
+    desc: Run `helm delete` on your chart code
+    dir: "{{.GIT_ROOT}}"
+    cmds:
+      - >-
+        helm delete {{.CHART}} --namespace {{.CHART}}
+    deps:
+      - _pre-reqs
+
+  _pre-reqs:
+    cmds:
+      - task charts:_check-dir CHART={{.CHART}}
+    silent: true
