@@ -116,6 +116,7 @@ service:
   # Specify the default port information
   port:
     port: 80
+    containerPort: 80
     # name defaults to http
     name: http
     protocol: TCP
@@ -128,6 +129,7 @@ service:
   additionalPorts: []
     # - name: "8080-udp"
     #   port: 8080
+    #   containerPort: 8080
     #   protocol: UDP
 
   ## Provide any additional annotations which may be required. This can be used to

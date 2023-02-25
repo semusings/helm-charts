@@ -4,6 +4,7 @@ version: '3'
 includes:
   tools: ./.taskfiles/tools.yaml
   charts: ./.taskfiles/charts.yaml
+  k8s: ./.taskfiles/k8s.yaml
   helm: ./.taskfiles/helm.yaml
 
 tasks:

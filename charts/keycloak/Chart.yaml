@@ -10,7 +10,7 @@ icon: "https://raw.githubusercontent.com/bhuwanupadhyay/helm-charts/main/images/
 dependencies:
   - name: common
     version: 0.0.1
-    repository: https://bhuwanupadhyay.github.io/helm-charts/
+    repository: file://../common
   - name: postgresql
     version: 12.2.1
     repository: https://charts.bitnami.com/bitnami

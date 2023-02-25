@@ -1,3 +1,4 @@
+{{ if .Values.selfSigned }}
 {{- $ca := genCA "keycloak-ca" 365 }}
 {{- $httpscert := genSignedCert .Values.ingress.hostname nil (list .Values.ingress.hostname) 365 $ca }}
 ---
@@ -12,3 +13,4 @@ data:
   tls.crt: {{ $httpscert.Cert | b64enc | quote }}
   tls.key: {{ $httpscert.Key | b64enc | quote }}
   ca.crt: {{ $ca.Cert | b64enc | quote }}
+{{- end }}

@@ -340,6 +340,13 @@
                             "default": null,
                             "description": "An explanation about the purpose of this instance.",
                             "title": "Port number",
+                            "type": ["integer"]
+                        },
+                        "containerPort": {
+                            "$id": "#/properties/service/properties/port/properties/containerPort",
+                            "default": null,
+                            "description": "An explanation about the purpose of this instance.",
+                            "title": "Container Port number",
                             "type": ["string", "integer"]
                         },
                         "name": {
