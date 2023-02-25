@@ -15,7 +15,7 @@ fi
 # create ingress-certs secret
 SECRET_NAME=ingress-certs
 
-for ns in default kube-addons; do
+for ns in kube-addons keycloak; do
 
   # create namespace if not exists
   if kubectl get namespace $ns >/dev/null 2>&1; then

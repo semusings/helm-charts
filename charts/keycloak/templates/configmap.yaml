@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: keycloak-envs
+  name: {{ .Values.envConfigName }}
   labels:
     {{- include "common.labels" . | nindent 4 }}
 data:

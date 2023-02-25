@@ -29,18 +29,20 @@ env:
   KC_HOSTNAME: keycloak.k8s.localdev
   "jgroups.dns.query": "keycloak"
 
+envConfigName: keycloak-envs
+envSecretName: keycloak-envs
 envFrom:
   - configMapRef:
       name: keycloak-envs
   - secretRef:
       name: keycloak-envs
   - secretRef:
-      name: keycloak-certs
+      name: ingress-certs
 
 additionalVolumes:
   - name: certs
     secret:
-      secretName: keycloak-certs
+      secretName: ingress-certs
 
 additionalVolumeMounts:
   - name: certs
@@ -54,7 +56,9 @@ service:
     containerPort: 8443
     targetPort: https
 
-selfSigned: true
+selfSigned: false
+certSecretName: ingress-certs
+
 ingress:
   enabled: true
   hostname: keycloak.k8s.localdev
@@ -67,7 +71,7 @@ ingress:
         - path: /
           pathType: Prefix
   tls:
-    - secretName: keycloak-certs
+    - secretName: ingress-certs
       hosts:
         - keycloak.k8s.localdev
 

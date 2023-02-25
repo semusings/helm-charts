@@ -5,7 +5,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: keycloak-certs
+  name: {{ .Values.certSecretName }}
   labels:
     {{- include "common.labels" . | nindent 4 }}
 type: kubernetes.io/tls
