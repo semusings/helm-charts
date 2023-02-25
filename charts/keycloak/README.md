@@ -1,6 +1,6 @@
 # keycloak
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 20.0.5](https://img.shields.io/badge/AppVersion-20.0.5-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 20.0.2](https://img.shields.io/badge/AppVersion-20.0.2-informational?style=flat-square)
 
 A Helm chart for Keycloak
 
@@ -13,8 +13,8 @@ mkcert k8s.localdev "*.k8s.localdev"
 ```
 
 ```bash
-kubectl create namespace keycloak-tls-keystore
-kubectl create secret tls -n keycloak keycloak-tls-keystore \
+kubectl create namespace keycloak
+kubectl create secret tls -n keycloak ingress-certs \
   --cert ./k8s.localdev+1.pem \
   --key ./k8s.localdev+1-key.pem
 ```

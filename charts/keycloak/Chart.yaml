@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 appVersion: "20.0.2"
-version: 1.0.0
+version: 0.0.1
 name: keycloak
 description: A Helm chart for Keycloak
 type: application
@@ -10,7 +10,7 @@ icon: "https://raw.githubusercontent.com/bhuwanupadhyay/helm-charts/main/images/
 dependencies:
   - name: common
     version: 0.0.1
-    repository: file://../common
+    repository: https://bhuwanupadhyay.github.io/helm-charts/
   - name: postgresql
     version: 12.2.1
     repository: https://charts.bitnami.com/bitnami

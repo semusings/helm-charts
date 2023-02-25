@@ -50,7 +50,9 @@ env: {}
 
 service:
   port:
-    port: 1880
+    port: 80
+    containerPort: 8080
+    name: http
 
 persistence:
   data:

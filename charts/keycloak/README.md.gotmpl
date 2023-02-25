@@ -25,8 +25,8 @@ mkcert k8s.localdev "*.k8s.localdev"
 ```
 
 ```bash
-kubectl create namespace keycloak-tls-keystore
-kubectl create secret tls -n keycloak keycloak-tls-keystore \
+kubectl create namespace keycloak
+kubectl create secret tls -n keycloak ingress-certs \
   --cert ./k8s.localdev+1.pem \
   --key ./k8s.localdev+1-key.pem
 ```
