@@ -1,0 +1,91 @@
+---
+#
+# IMPORTANT NOTE
+#
+# This chart inherits from our common library chart. You can check the default values/options here:
+# https://github.com/bhuwanupadhyay/helm-charts/tree/main/charts/common/values.yaml
+#
+
+image:
+  repository: quay.io/keycloak/keycloak
+  pullPolicy: IfNotPresent
+  tag: ""
+
+# Override the default args
+args: [ "start", "--cache-stack=kubernetes" ]
+
+secret: { }
+
+# See more environment variables in the template documentation
+# https://template.org/docs
+env:
+  KEYCLOAK_ADMIN: admin
+  KEYCLOAK_ADMIN_PASSWORD: admin
+  KC_PROXY: "edge"
+  KC_HTTPS_CERTIFICATE_FILE: "/etc/certs/tls.crt"
+  KC_HTTPS_CERTIFICATE_KEY_FILE: "/etc/certs/tls.key"
+  KC_HEALTH_ENABLED: "true"
+  KC_METRICS_ENABLED: "true"
+  KC_HOSTNAME: keycloak.k8s.localdev
+  "jgroups.dns.query": "keycloak"
+
+envConfigName: keycloak-envs
+envSecretName: keycloak-envs
+envFrom:
+  - configMapRef:
+      name: keycloak-envs
+  - secretRef:
+      name: keycloak-envs
+  - secretRef:
+      name: ingress-certs
+
+additionalVolumes:
+  - name: certs
+    secret:
+      secretName: ingress-certs
+
+additionalVolumeMounts:
+  - name: certs
+    mountPath: /etc/certs
+    readOnly: true
+
+service:
+  port:
+    port: 443
+    name: https
+    containerPort: 8443
+    targetPort: https
+
+selfSigned: false
+certSecretName: ingress-certs
+
+ingress:
+  enabled: true
+  hostname: keycloak.k8s.localdev
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "https"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+  hosts:
+    - host: "keycloak.k8s.localdev"
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: ingress-certs
+      hosts:
+        - keycloak.k8s.localdev
+
+persistence: { }
+
+# Enable postgres
+# https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+postgresql:
+  enabled: true
+  architecture: standalone
+  global:
+    postgresql:
+      auth:
+        postgresPassword: keycloak-postgres
+        username: keycloak
+        database: keycloak
+        password: keycloak
