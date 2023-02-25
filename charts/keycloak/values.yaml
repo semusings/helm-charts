@@ -12,69 +12,63 @@ image:
   tag: ""
 
 # Override the default args
-args: [ "start" ]
+args: [ "start", "--cache-stack=kubernetes" ]
 
 secret: { }
 
 # See more environment variables in the template documentation
-# https://www.keycloak.org/server/all-config
+# https://template.org/docs
 env:
   KEYCLOAK_ADMIN: admin
   KEYCLOAK_ADMIN_PASSWORD: admin
-  KC_HOSTNAME: keycloak.k8s.localdev
   KC_PROXY: "edge"
-  KC_HTTPS_CERTIFICATE_FILE: /config/keycloak-tls-keystore/tls.crt
-  KC_HTTPS_CERTIFICATE_KEY_FILE: /config/keycloak-tls-keystore/tls.key
-  KC_HOSTNAME_STRICT: "true"
-  KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
-
-additionalVolumes:
-  - name: keycloak-tls-keystore
-    secret:
-      secretName: keycloak-tls-keystore
-
-additionalVolumeMounts:
-  - name: keycloak-tls-keystore
-    mountPath: /config/keycloak-tls-keystore
-    readOnly: true
+  KC_HTTPS_CERTIFICATE_FILE: "/etc/certs/tls.crt"
+  KC_HTTPS_CERTIFICATE_KEY_FILE: "/etc/certs/tls.key"
+  KC_HEALTH_ENABLED: "true"
+  KC_METRICS_ENABLED: "true"
+  KC_HOSTNAME: keycloak.k8s.localdev
+  "jgroups.dns.query": "keycloak"
 
 envFrom:
   - configMapRef:
       name: keycloak-envs
   - secretRef:
       name: keycloak-envs
+  - secretRef:
+      name: keycloak-certs
 
-externalDatabase:
-  enabled: false
-  type: postgres
-  host: keycloak-postgresql
-  port: 5432
-  database: keycloak
-  user: keycloak
-  password: keycloak
+additionalVolumes:
+  - name: certs
+    secret:
+      secretName: keycloak-certs
+
+additionalVolumeMounts:
+  - name: certs
+    mountPath: /etc/certs
+    readOnly: true
 
 service:
   port:
-    port: 8080
+    port: 8443
+
 
 ingress:
   enabled: true
-  #  kubernetes.io/ingress.class: nginx
+  hostname: keycloak.k8s.localdev
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "https"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
   hosts:
     - host: "keycloak.k8s.localdev"
       paths:
         - path: /
           pathType: Prefix
-  tls: [ ]
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls:
+    - secretName: keycloak-certs
+      hosts:
+        - keycloak.k8s.localdev
 
-persistence:
-  config:
-    enabled: false
-    emptyDir: false
-    mountPath: /config
+persistence: {}
 
 # Enable postgres
 # https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml

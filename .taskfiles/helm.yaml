@@ -7,6 +7,15 @@ vars:
 
 tasks:
 
+  ingress:
+    desc: Run `helm install` ingress-nginx
+    dir: "{{.GIT_ROOT}}"
+    cmds:
+      - >-
+        helm upgrade --install {{.CHART}} charts/{{.CHART}} --namespace {{.CHART}} --create-namespace --wait --timeout 10m
+    deps:
+      - _pre-reqs
+
   install:
     desc: Run `helm install` on your chart code
     dir: "{{.GIT_ROOT}}"

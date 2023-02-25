@@ -1,0 +1,14 @@
+{{- $ca := genCA "keycloak-ca" 365 }}
+{{- $httpscert := genSignedCert .Values.ingress.hostname nil (list .Values.ingress.hostname) 365 $ca }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-certs
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+type: kubernetes.io/tls
+data:
+  tls.crt: {{ $httpscert.Cert | b64enc | quote }}
+  tls.key: {{ $httpscert.Key | b64enc | quote }}
+  ca.crt: {{ $ca.Cert | b64enc | quote }}
