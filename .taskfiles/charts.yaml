@@ -57,22 +57,6 @@ tasks:
       - _dependency
       - _check-dir
 
-  ct-lint:
-    desc: Run `ct lint` on your chart code
-    cmds:
-      - >-
-        docker run --rm -it \
-          --user $(id -u):$(id -g) \
-          -e "HELM_CONFIG_HOME=/tmp/helm" \
-          -e "HELM_CACHE_HOME=/tmp/helm" \
-          -v {{.GIT_ROOT}}:/ci \
-          -w /ci quay.io/helmpack/chart-testing:latest ct lint \
-          --charts charts/{{.CHART}} \
-          --config /ci/.github/ct-lint.yaml
-    deps:
-      - _check-dir
-      - lint
-
   helm-docs:
     desc: Generate helm-docs
     dir: "{{.GIT_ROOT}}/charts/{{.CHART}}"
@@ -81,15 +65,6 @@ tasks:
     deps:
       - _check-dir
     silent: true
-
-  ct-install:
-    desc: Run `ct install` on your chart code
-    dir: "{{.GIT_ROOT}}"
-    cmds:
-       - >-
-          ct install --charts charts/{{.CHART}} --config .github/ct-install.yaml
-    deps:
-      - _check-dir
 
   _check-var:
     cmds:
