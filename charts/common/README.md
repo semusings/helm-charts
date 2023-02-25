@@ -53,6 +53,7 @@ service:
     port: 80
     containerPort: 8080
     name: http
+    targetPort: http
 
 persistence:
   data:
