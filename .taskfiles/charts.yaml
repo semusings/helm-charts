@@ -12,7 +12,6 @@ tasks:
     cmds:
       - mkdir -p {{.GIT_ROOT}}/charts/{{.CHART}}
       - cp -R ./template/* {{.GIT_ROOT}}/charts/{{.CHART}}/
-      - cp -R ./charts/common/README.md.gotmpl {{.GIT_ROOT}}/charts/{{.CHART}}/README.md.gotmpl
       - cp -R ./charts/common/values.schema.json {{.GIT_ROOT}}/charts/{{.CHART}}/values.schema.json
       - task: _dependency
       - echo "Congratulations, charts/{{.CHART}} successfully generated, you can now edit chart informations ( Chart.yaml and values.yaml )"

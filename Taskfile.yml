@@ -2,8 +2,10 @@
 version: '3'
 
 includes:
-  deps: ./.taskfiles/deps.yaml
-  chart: ./.taskfiles/chart.yaml
+  tools: ./.taskfiles/tools.yaml
+  charts: ./.taskfiles/charts.yaml
+  k8s: ./.taskfiles/k8s.yaml
+  helm: ./.taskfiles/helm.yaml
 
 tasks:
   default:

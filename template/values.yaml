@@ -16,7 +16,7 @@ secret: {}
 # See more environment variables in the template documentation
 # https://template.org/docs
 env: {}
-  # TZ: ""
+# TZ: ""
 
 service:
   port:
@@ -31,25 +31,14 @@ persistence:
     emptyDir: false
     mountPath: /config
 
-# Enable mariadb
-# https://github.com/bhuwanupadhyay/helm-charts/blob/main/charts/mariadb/values.yaml
-mariadb:
-  enabled: false
-  secret:
-    MYSQL_ROOT_PASSWORD: "template-pass"
-    MYSQL_PASSWORD: "template-pass"
-  env:
-    MYSQL_USER: "template"
-    MYSQL_DATABASE: "template-mariadb"
-  fullnameOverride: template-mariadb
-
 # Enable postgres
-# https://github.com/bhuwanupadhyay/helm-charts/blob/main/charts/postgres/values.yaml
-postgres:
+# https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+postgresql:
   enabled: false
-  secret:
-    POSTGRES_PASSWORD: "template-pass"
-  env:
-    POSTGRES_USER: "template"
-    POSTGRES_DB: "template-postgres"
-  fullnameOverride: template-postgres
+  global:
+    postgresql:
+      auth:
+        postgresPassword: "template-postgres-pass"
+        username: "template"
+        password: "template-pass"
+        database: "template-db"

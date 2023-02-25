@@ -1,0 +1,29 @@
+---
+version: '3'
+
+vars:
+  GIT_ROOT:
+    sh: "git rev-parse --show-toplevel"
+
+tasks:
+
+  install:
+    desc: Run `tilt up`
+    dir: "{{.GIT_ROOT}}/k8s"
+    cmds:
+      - tilt up
+    deps:
+      - _pre-reqs
+
+  delete:
+    desc: Run `helm delete` on your chart code
+    dir: "{{.GIT_ROOT}}/k8s"
+    cmds:
+      - >-
+        tilt down
+
+  _pre-reqs:
+    dir: "{{.GIT_ROOT}}/k8s"
+    cmds:
+      - ./install.sh
+    silent: true

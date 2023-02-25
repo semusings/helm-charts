@@ -8,3 +8,4 @@ charts/template/
 .bin/
 .idea/
 *.iml
+*.pem
