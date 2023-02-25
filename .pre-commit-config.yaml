@@ -17,7 +17,7 @@ repos:
     - id: remove-crlf
     - id: remove-tabs
 
-#  - repo: https://github.com/gruntwork-io/pre-commit
-#    rev: v0.1.12
-#    hooks:
-#      - id: helmlint
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.12
+    hooks:
+      - id: helmlint
