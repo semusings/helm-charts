@@ -9,7 +9,7 @@ tasks:
 
   install:
     desc: Run `tilt up`
-    dir: "{{.GIT_ROOT}}/k8s"
+    dir: "{{.GIT_ROOT}}/test/k8s"
     cmds:
       - tilt up
     deps:
@@ -17,13 +17,13 @@ tasks:
 
   delete:
     desc: Run `helm delete` on your chart code
-    dir: "{{.GIT_ROOT}}/k8s"
+    dir: "{{.GIT_ROOT}}/test/k8s"
     cmds:
       - >-
         tilt down
 
   _pre-reqs:
-    dir: "{{.GIT_ROOT}}/k8s"
+    dir: "{{.GIT_ROOT}}/test/k8s"
     cmds:
       - ./install.sh
     silent: true
