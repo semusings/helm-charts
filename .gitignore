@@ -9,3 +9,4 @@ charts/template/
 .idea/
 *.iml
 *.pem
+.DS_Store
