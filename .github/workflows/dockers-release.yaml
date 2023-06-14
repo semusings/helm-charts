@@ -45,10 +45,12 @@ jobs:
 
           SUBDIRECTORIES=$(find "$DIRECTORY_PATH" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
 
+          echo "::set-output name=base_directory::$DIRECTORY_PATH"
           echo "::set-output name=subdirectories::$SUBDIRECTORIES"
 
       - name: Build and Push Docker Images
         run: |
+          DIRECTORY_PATH=${{ steps.list_subdirectories.outputs.base_directory }}
           SUBDIRECTORIES=${{ steps.list_subdirectories.outputs.subdirectories }}
 
           for subdir in $SUBDIRECTORIES; do
@@ -58,7 +60,7 @@ jobs:
               --platform linux/amd64,linux/arm64 \
               --push \
               --tag $REGISTRY/$IMAGE_NAME:$subdir \
-              --file $subdir/Dockerfile .
+              --file Dockerfile $DIRECTORY_PATH/$subdir
 
             echo "Successfully built and pushed Docker image in $subdir"
           done
