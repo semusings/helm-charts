@@ -57,7 +57,6 @@ jobs:
             echo "Building and pushing Docker image in $subdir"            
             ls -lr $DIRECTORY_PATH/$subdir          
             docker buildx build \
-              --platform linux/amd64,linux/arm64 \
               --push \
               --tag $REGISTRY/$IMAGE_NAME:$subdir ./$DIRECTORY_PATH/$subdir
 
