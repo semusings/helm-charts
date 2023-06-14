@@ -54,6 +54,7 @@ jobs:
 
           for subdir in $SUBDIRECTORIES; do
             echo "Building and pushing Docker image in $subdir"
+            REGISTRY=docker.io/${{ secrets.DOCKER_USERNAME }}
             IMAGE_NAME="$subdir"
             TAG="$(cat $DIRECTORY_PATH/$subdir/VERSION)"        
             docker buildx build \
