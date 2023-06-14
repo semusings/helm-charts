@@ -59,7 +59,7 @@ jobs:
             TAG="$(cat $DIRECTORY_PATH/$subdir/VERSION)"        
             docker buildx build \
               --push \
-              --tag $IMAGE_NAME:$TAG ./$DIRECTORY_PATH/$subdir
+              --tag $REGISTRY/$IMAGE_NAME:$TAG ./$DIRECTORY_PATH/$subdir
 
             echo "Successfully built and pushed Docker image in $subdir"
           done
