@@ -7,9 +7,9 @@
 #
 
 image:
-  repository: bhuwanupadhyay/apache-jena
+  repository: ghcr.io/bhuwanupadhyay/helm-charts
   pullPolicy: IfNotPresent
-  tag: "4.8.0"
+  tag: "apache-jena-4.8.0"
 
 secret: {}
 

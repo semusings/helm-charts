@@ -9,7 +9,8 @@ ARG FUSEKI_JAR=jena-fuseki-server-${JENA_VERSION}.jar
 ARG JAVA_MINIMAL=/opt/java-minimal
 
 ## ---- Stage: Download and build java.
-FROM eclipse-temurin:${JAVA_VERSION}-alpine AS base
+#FROM eclipse-temurin:${JAVA_VERSION}-alpine AS base
+FROM amazoncorretto:${JAVA_VERSION}-alpine3.17-jdk AS base
 
 ARG JAVA_MINIMAL
 ARG JENA_VERSION

@@ -6,6 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    platform: linux/arm64
     image: fuseki
     ports:
       - "3030:3030"
