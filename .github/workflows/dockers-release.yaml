@@ -54,8 +54,8 @@ jobs:
           SUBDIRECTORIES=${{ steps.list_subdirectories.outputs.subdirectories }}
 
           for subdir in $SUBDIRECTORIES; do
-            echo "Building and pushing Docker image in $subdir"
-
+            echo "Building and pushing Docker image in $subdir"            
+            ls -lr $DIRECTORY_PATH/$subdir          
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
               --push \
