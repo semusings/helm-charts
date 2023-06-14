@@ -1,5 +1,3 @@
-## Apache Jena Fuseki server Dockerfile.
-
 ## This Dockefile builds a reduced footprint container.
 
 ARG JAVA_VERSION=17

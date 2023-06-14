@@ -59,8 +59,7 @@ jobs:
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
               --push \
-              --tag $REGISTRY/$IMAGE_NAME:$subdir \
-              --file Dockerfile $DIRECTORY_PATH/$subdir
+              --tag $REGISTRY/$IMAGE_NAME:$subdir ./$DIRECTORY_PATH/$subdir
 
             echo "Successfully built and pushed Docker image in $subdir"
           done
