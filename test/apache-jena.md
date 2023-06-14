@@ -7,9 +7,9 @@ task helm:build CHART=apache-jena
 ```
 
 ```bash
-task helm:install CHART=keycloak 
+task helm:install CHART=apache-jena  
 ```
 
 ```bash
-task helm:delete CHART=keycloak 
+task helm:delete CHART=apache-jena  
 ```

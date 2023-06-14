@@ -5,7 +5,7 @@ version: 1.0.0
 name: template
 description: A Helm chart for Kubernetes
 type: application
-home: "https://github.com/bhuwanupadhyay/helm-charts/tree/main/charts/"
+home: "https://github.com/bhuwanupadhyay/helm-charts/tree/main/charts/template"
 icon: "https://raw.githubusercontent.com/bhuwanupadhyay/helm-charts/main/images/template.png"
 dependencies:
   - name: common

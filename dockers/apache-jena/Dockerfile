@@ -1,5 +1,3 @@
-## This Dockefile builds a reduced footprint container.
-
 ARG JAVA_VERSION=17
 
 ARG ALPINE_VERSION=3.17.1

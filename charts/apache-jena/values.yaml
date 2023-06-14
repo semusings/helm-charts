@@ -7,9 +7,9 @@
 #
 
 image:
-  repository: ghcr.io/bhuwanupadhyay/helm-charts
+  repository: bhuwanupadhyay/apache-jena
   pullPolicy: IfNotPresent
-  tag: "apache-jena"
+  tag: "4.8.0"
 
 secret: {}
 
@@ -30,15 +30,3 @@ persistence:
     enabled: false
     emptyDir: false
     mountPath: /config
-
-# Enable postgres
-# https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
-postgresql:
-  enabled: false
-  global:
-    postgresql:
-      auth:
-        postgresPassword: "template-postgres-pass"
-        username: "template"
-        password: "template-pass"
-        database: "template-db"
