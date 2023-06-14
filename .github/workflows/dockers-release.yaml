@@ -55,10 +55,10 @@ jobs:
 
           for subdir in $SUBDIRECTORIES; do
             echo "Building and pushing Docker image in $subdir"            
-            ls -lr $DIRECTORY_PATH/$subdir          
+            TAG="$subdir-$(cat $DIRECTORY_PATH/$subdir/VERSION)"        
             docker buildx build \
               --push \
-              --tag $REGISTRY/$IMAGE_NAME:$subdir ./$DIRECTORY_PATH/$subdir
+              --tag $REGISTRY/$IMAGE_NAME:$TAG ./$DIRECTORY_PATH/$subdir
 
             echo "Successfully built and pushed Docker image in $subdir"
           done
