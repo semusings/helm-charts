@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: fuseki
+    image: bhuwanupadhyay/fuseki
     ports:
       - "3030:3030"
     volumes:
