@@ -46,16 +46,6 @@ The command removes all the Kubernetes components associated with the chart and 
 
 {{- define "configuration.readValues" -}}
 Read through the [values.yaml](./values.yaml) file. It has several commented out suggested values.
-Other values may be used from the [values.yaml](../common/values.yaml) from the [common library](../common).
-{{- end -}}
-
-{{- define "configuration.example.set" -}}
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
-```console
-helm install {{ template "chart.name" . }} \
-  --set env.TZ="America/New York" \
-    {{ template "helm.path" . }}
-```
 {{- end -}}
 
 {{- define "configuration.example.file" -}}

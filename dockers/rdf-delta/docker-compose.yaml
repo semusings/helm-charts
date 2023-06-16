@@ -1,0 +1,108 @@
+version: "3.9"
+services:
+  delta1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bhuwanupadhyay/rdf-delta
+    command: [
+      "server",
+      "--port=1060",
+      "--zkPort=1110",
+      "--zk=delta1:1110,delta2:1110,delta3:1110",
+      "--zkData=/delta",
+#      "--s3bucket=some-bucket-name --s3region=region"
+    ]
+    ports:
+      - "1060"
+      - "1110"
+    environment:
+      - JAVA_XMS=512m
+      - JAVA_XMX=1g
+    volumes:
+      - ./log4j2.xml:/log4j2.xml
+      - delta1-data:/delta
+  delta2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bhuwanupadhyay/rdf-delta
+    command: [
+      "server",
+      "--port=1060",
+      "--zkPort=1110",
+      "--zk=delta1:1110,delta2:1110,delta3:1110",
+      "--zkData=/delta",
+#      "--s3bucket=some-bucket-name --s3region=region"
+    ]
+    ports:
+      - "1060"
+      - "1110"
+    environment:
+      - JAVA_XMS=512m
+      - JAVA_XMX=1g
+    volumes:
+      - ./log4j2.xml:/log4j2.xml
+      - delta2-data:/delta
+  delta3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bhuwanupadhyay/rdf-delta
+    command: [
+      "server",
+      "--port=1060",
+      "--zkPort=1110",
+      "--zk=delta1:1110,delta2:1110,delta3:1110",
+      "--zkData=/delta",
+#      "--s3bucket=some-bucket-name --s3region=region"
+    ]
+    ports:
+      - "1060"
+      - "1110"
+    environment:
+      - JAVA_XMS=512m
+      - JAVA_XMX=1g
+    volumes:
+      - ./log4j2.xml:/log4j2.xml
+      - delta3-data:/delta
+  fuseki1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bhuwanupadhyay/rdf-delta
+    command: [
+      "fuseki",
+      "--port=3033",
+      "--conf=fuseki-config.ttl",
+    ]
+    ports:
+      - "3033"
+    environment:
+      - JAVA_XMS=512m
+      - JAVA_XMX=1g
+    volumes:
+      - ./log4j2.xml:/log4j2.xml
+      - ./fuseki-config.ttl:/fuseki-config.ttl
+  fuseki2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bhuwanupadhyay/rdf-delta
+    command: [
+      "fuseki",
+      "--port=3033",
+      "--conf=fuseki-config.ttl",
+    ]
+    ports:
+      - "3033"
+    environment:
+      - JAVA_XMS=512m
+      - JAVA_XMX=1g
+    volumes:
+      - ./log4j2.xml:/log4j2.xml
+      - ./fuseki-config.ttl:/fuseki-config.ttl
+volumes:
+  delta1-data:
+  delta2-data:
+  delta3-data:

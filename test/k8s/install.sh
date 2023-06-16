@@ -2,6 +2,8 @@
 
 set -e
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # create self-signed certificate
 DOMAIN=k8s.localdev
 
@@ -33,4 +35,5 @@ for ns in default ingress-nginx; do
 
 done
 
-tilt up
+kustomize build "$SCRIPT_DIR/addons/helm-controller" | kubectl apply -f -
+kustomize build "$SCRIPT_DIR/addons/ingress-nginx" | kubectl apply -f -
