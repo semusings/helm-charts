@@ -1,5 +1,6 @@
 ARG JAVA_VERSION=17
-FROM openjdk:${JAVA_VERSION}-alpine
+#FROM openjdk:${JAVA_VERSION}-alpine
+FROM amazoncorretto:${JAVA_VERSION}-alpine3.17-jdk
 
 ARG RDF_DELTA_VERSION=1.1.2
 ARG REPO=https://repo1.maven.org/maven2
