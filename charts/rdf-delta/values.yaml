@@ -104,9 +104,10 @@ readinessProbe:
   failureThreshold: 5
   successThreshold: 1
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
+fusekiReplicaCount: 2
+fusekiAutoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 80
