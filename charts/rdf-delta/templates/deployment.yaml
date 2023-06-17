@@ -64,6 +64,9 @@ spec:
             - mountPath: /fuseki-config.ttl
               name: fuseki-config
               subPath: fuseki-config.ttl
+            - mountPath: /log4j2.xml
+              name: logging-config
+              subPath: log4j2.xml
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -82,5 +85,8 @@ spec:
         - name: fuseki-databases
           emptyDir: {}
         - name: fuseki-config
+          configMap:
+            name: {{ include "rdf-delta.fullname" . }}
+        - name: logging-config
           configMap:
             name: {{ include "rdf-delta.fullname" . }}
