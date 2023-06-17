@@ -62,11 +62,14 @@ spec:
             - mountPath: /fuseki/databases
               name: fuseki-databases
             - mountPath: /fuseki-config.ttl
-              name: fuseki-config
+              name: config
               subPath: fuseki-config.ttl
             - mountPath: /log4j2.xml
-              name: logging-config
+              name: config
               subPath: log4j2.xml
+            - mountPath: /password_file
+              name: secret
+              subPath: password_file
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -84,9 +87,9 @@ spec:
       volumes:
         - name: fuseki-databases
           emptyDir: {}
-        - name: fuseki-config
+        - name: config
           configMap:
             name: {{ include "rdf-delta.fullname" . }}
-        - name: logging-config
-          configMap:
-            name: {{ include "rdf-delta.fullname" . }}
+        - name: secret
+          secret:
+            secretName: {{ include "rdf-delta.fullname" . }}

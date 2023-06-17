@@ -8,7 +8,10 @@ PREFIX ja:      <http://jena.hpl.hp.com/2005/11/Assembler#>
 PREFIX delta:   <http://jena.apache.org/rdf-delta#>
 
 [] rdf:type fuseki:Server ;
-   .
+    fuseki:passwd  "password_file" ;
+    fuseki:auth    "basic" ;
+    fuseki:allowedUsers "admin" ;
+    .
 
 <#service1> rdf:type fuseki:Service ;
     fuseki:name                        "ds" ;

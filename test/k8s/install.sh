@@ -35,5 +35,4 @@ for ns in default ingress-nginx; do
 
 done
 
-kustomize build "$SCRIPT_DIR/addons/helm-controller" | kubectl apply -f -
-kustomize build "$SCRIPT_DIR/addons/ingress-nginx" | kubectl apply -f -
+tilt up

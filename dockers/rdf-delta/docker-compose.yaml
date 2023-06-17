@@ -84,6 +84,7 @@ services:
     volumes:
       - ./log4j2.xml:/log4j2.xml
       - ./fuseki-config.ttl:/fuseki-config.ttl
+      - ./password_file:/password_file
   fuseki2:
     build:
       context: .
@@ -102,6 +103,7 @@ services:
     volumes:
       - ./log4j2.xml:/log4j2.xml
       - ./fuseki-config.ttl:/fuseki-config.ttl
+      - ./password_file:/password_file
 volumes:
   delta1-data:
   delta2-data:
