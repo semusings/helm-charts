@@ -78,7 +78,7 @@ data:
     [] rdf:type fuseki:Server ;
         fuseki:passwd  "password_file" ;
         fuseki:auth    "basic" ;
-        fuseki:allowedUsers "admin" ;
+        fuseki:allowedUsers "{{ .Values.fusekiAdminUsername }}" ;
         .
 
     <#service1> rdf:type fuseki:Service ;

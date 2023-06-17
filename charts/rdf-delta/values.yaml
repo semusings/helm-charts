@@ -104,7 +104,8 @@ readinessProbe:
   failureThreshold: 5
   successThreshold: 1
 
-fusekiAdminPassword: password
+fusekiAdminUsername: admin
+fusekiAdminPassword: FPasswordRt
 fusekiReplicaCount: 2
 fusekiAutoscaling:
   enabled: true
