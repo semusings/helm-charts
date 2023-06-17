@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "rdf-delta.fullname" . }}-fuseki
+  labels:
+    {{- include "rdf-delta.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http-fuseki
+      protocol: TCP
+      name: http-fuseki
+  selector:
+    {{- include "rdf-delta.selectorLabels" . | nindent 4 }}

@@ -15,6 +15,14 @@ tasks:
     deps:
       - _pre-reqs
 
+  lint:
+    desc: Run `helm dependency build` on your chart code
+    dir: "{{.GIT_ROOT}}"
+    cmds:
+      - helm lint charts/{{.CHART}}
+    deps:
+      - _pre-reqs
+
   install:
     desc: Run `helm install` on your chart code
     dir: "{{.GIT_ROOT}}"

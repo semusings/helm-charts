@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "rdf-delta.fullname" . }}-headless
+  labels:
+    {{- include "rdf-delta.labels" . | nindent 4 }}
+spec:
+  clusterIP: None
+  publishNotReadyAddresses: true
+  ports:
+    - port: {{ .Values.service.zkPort }}
+      targetPort: {{ .Values.service.zkPort }}
+      protocol: TCP
+      name: tcp-zk
+  selector:
+    {{- include "rdf-delta.selectorLabels" . | nindent 4 }}

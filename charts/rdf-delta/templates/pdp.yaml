@@ -1,0 +1,8 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "rdf-delta.fullname" . }}
+  labels:
+    {{- include "rdf-delta.labels" . | nindent 4 }}
+spec:
+  maxUnavailable: {{ .Values.podDisruptionBudget.maxUnavailable }}
