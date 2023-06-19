@@ -1,5 +1,33 @@
 apiVersion: v1
 entries:
+  apache-jena:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Initial release.
+      artifacthub.io/images: |
+        - name: template
+          image: ghcr.io/bhuwanupadhyay/helm-charts:apache-jena-4.8.0
+    apiVersion: v2
+    appVersion: 1.10.0
+    created: "2023-06-19T04:17:09.368440064Z"
+    description: A Helm chart for Apache Jena
+    digest: 8d12da5bd2a45924b7d38f89c2020a67d7550d3f20cbfc243f903810c3a67d6d
+    home: https://github.com/bhuwanupadhyay/helm-charts/tree/main/charts/apache-jena
+    icon: https://raw.githubusercontent.com/bhuwanupadhyay/helm-charts/main/images/apache-jena.png
+    keywords:
+    - Apache Jena
+    - Semantic Web
+    maintainers:
+    - email: hi@bhuwanupadhyay.com
+      name: bhuwanupadhyay
+    name: apache-jena
+    sources:
+    - https://github.com/apache/jena
+    type: application
+    urls:
+    - https://github.com/bhuwanupadhyay/helm-charts/releases/download/apache-jena-1.0.0/apache-jena-1.0.0.tgz
+    version: 1.0.0
   common:
   - annotations:
       artifacthub.io/changes: |
@@ -58,4 +86,32 @@ entries:
     urls:
     - https://github.com/bhuwanupadhyay/helm-charts/releases/download/keycloak-1.0.0/keycloak-1.0.0.tgz
     version: 1.0.0
-generated: "2023-02-25T23:58:50.58493939Z"
+  rdf-delta:
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Initial release.
+      artifacthub.io/images: |
+        - name: template
+          image: ghcr.io/bhuwanupadhyay/helm-charts:rdf-delta-1.1.2
+    apiVersion: v2
+    appVersion: 1.10.0
+    created: "2023-06-19T04:17:09.524047813Z"
+    description: A Helm chart for Apache Jena
+    digest: c68dd75bd4b8902b8c8888fde0fda1f33a2191c0328b55404b12122bbfb917d3
+    home: https://github.com/bhuwanupadhyay/helm-charts/tree/main/charts/rdf-delta
+    icon: https://raw.githubusercontent.com/bhuwanupadhyay/helm-charts/main/images/rdf-delta.png
+    keywords:
+    - Apache Jena
+    - Semantic Web
+    maintainers:
+    - email: hi@bhuwanupadhyay.com
+      name: bhuwanupadhyay
+    name: rdf-delta
+    sources:
+    - https://github.com/apache/jena
+    type: application
+    urls:
+    - https://github.com/bhuwanupadhyay/helm-charts/releases/download/rdf-delta-1.0.0/rdf-delta-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-06-19T04:17:09.524058113Z"
