@@ -1,0 +1,126 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "rdf-delta.fullname" . }}
+  labels:
+    {{- include "rdf-delta.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: Parallel
+  serviceName: {{ include "rdf-delta.fullname" . }}-headless
+  updateStrategy:
+    type: {{ .Values.updateStrategy.type }}
+  selector:
+    matchLabels:
+      {{- include "rdf-delta.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rdf-delta.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "rdf-delta.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [ "dcmd" ]
+          args:
+            - "server"
+            - "--port={{ .Values.service.deltaPort  }}"
+            - "--zkPort={{ .Values.service.zkPort  }}"
+            {{- $replicaCount := int .Values.replicaCount }}
+            {{- $minServerId := int .Values.minServerId }}
+            {{- $fullname := include "rdf-delta.fullname" . }}
+            {{- $releaseNamespace := include "rdf-delta.namespace" . }}
+            {{- $clusterDomain := .Values.clusterDomain }}
+            {{- $port := int .Values.service.zkPort }}
+            {{- $headlessServiceName := printf "%s-%s" $fullname "headless" | trunc 63  }}
+            {{- $addresses := "" }}
+            {{- range $i, $e := until $replicaCount }}
+              {{- $address := printf "%s-%d.%s.%s.svc.%s:%d" $fullname $e $headlessServiceName $releaseNamespace $clusterDomain $port }}
+              {{- $addresses = printf "%s,%s" $addresses $address }}
+            {{- end }}
+            - "--zk={{ trimPrefix "," $addresses }}"
+            - "--zkData=/delta"
+{{/*            - "--s3bucket=some-bucket-name --s3region=region"*/}}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.deltaPort  }}
+              protocol: TCP
+            - name: zk
+              containerPort: {{ .Values.service.zkPort  }}
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - '-c'
+                - "dcmd ping --server=http://localhost:{{ .Values.service.deltaPort  }}"
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - '-c'
+                - "dcmd ping --server=http://localhost:{{ .Values.service.deltaPort  }}"
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          volumeMounts:
+            - mountPath: /delta
+              name: data
+            - mountPath: /log4j2.xml
+              name: logging-config
+              subPath: log4j2.xml
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+        - name: logging-config
+          configMap:
+            name: {{ include "rdf-delta.fullname" . }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          app.kubernetes.io/name: {{ include "rdf-delta.name" . }}
+      spec:
+        accessModes:
+          - {{ .Values.persistence.accessMode }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}
+        storageClassName: {{ .Values.persistence.storageClass }}
+

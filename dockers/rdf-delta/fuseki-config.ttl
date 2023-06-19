@@ -1,0 +1,36 @@
+## Licensed under the terms of http://www.apache.org/licenses/LICENSE-2.0
+
+PREFIX :        <#>
+PREFIX fuseki:  <http://jena.apache.org/fuseki#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ja:      <http://jena.hpl.hp.com/2005/11/Assembler#>
+PREFIX delta:   <http://jena.apache.org/rdf-delta#>
+
+[] rdf:type fuseki:Server ;
+    fuseki:passwd  "password_file" ;
+    fuseki:auth    "basic" ;
+    fuseki:allowedUsers "admin" ;
+    .
+
+<#service1> rdf:type fuseki:Service ;
+    fuseki:name                        "ds" ;
+    fuseki:serviceQuery                "sparql" ;
+    fuseki:serviceQuery                "query" ;
+    fuseki:serviceUpdate               "update" ;
+    fuseki:serviceUpload               "upload" ;
+    fuseki:serviceReadWriteGraphStore  "data" ;
+    fuseki:serviceReadGraphStore       "get" ;
+    fuseki:dataset                     <#dataset> ;
+    .
+
+<#dataset> rdf:type delta:DeltaDataset ;
+    ## List of Delta Patch Servers
+    delta:changes  ("http://delta1:1060/" "http://delta2:1060/"  "http://delta3:1060/") ;
+    ## Name of patch log
+    delta:patchlog "DeltaPatchLog";
+    ## Name of local directory used for the storage of Jena database and Delta client state.
+    delta:zone "Zone";
+    ## Choices: "mem", "tdb", "tdb2"
+    delta:storage "tdb2";
+    .

@@ -2,6 +2,8 @@
 
 set -e
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # create self-signed certificate
 DOMAIN=k8s.localdev
 
@@ -15,7 +17,7 @@ fi
 # create ingress-certs secret
 SECRET_NAME=ingress-certs
 
-for ns in kube-addons keycloak; do
+for ns in default ingress-nginx; do
 
   # create namespace if not exists
   if kubectl get namespace $ns >/dev/null 2>&1; then
@@ -32,3 +34,5 @@ for ns in kube-addons keycloak; do
     -o yaml | kubectl apply -f -
 
 done
+
+tilt up

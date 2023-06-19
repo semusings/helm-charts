@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "rdf-delta.fullname" . }}
+  labels:
+    {{- include "rdf-delta.labels" . | nindent 4 }}
+data:
+  {{- $replicaCount := int .Values.replicaCount }}
+  {{- $minServerId := int .Values.minServerId }}
+  {{- $fullname := include "rdf-delta.fullname" . }}
+  {{- $releaseNamespace := include "rdf-delta.namespace" . }}
+  {{- $clusterDomain := .Values.clusterDomain }}
+  {{- $port := int .Values.service.deltaPort }}
+  {{- $headlessServiceName := printf "%s-%s" $fullname "headless" | trunc 63  }}
+  {{- $addresses := "" }}
+  {{- range $i, $e := until $replicaCount }}
+    {{- $address := printf "\"http://%s-%d.%s.%s.svc.%s:%d\"" $fullname $e $headlessServiceName $releaseNamespace $clusterDomain $port }}
+    {{- $addresses = printf "%s %s" $addresses $address }}
+  {{- end }}
+  log4j2.xml: |-
+    <?xml version='1.0' encoding='UTF-8'?>
+    <!-- Licensed under the terms of http://www.apache.org/licenses/LICENSE-2.0 -->
+    <!--
+        Logging setup for the patch server for RDF Delta and for Fuseki with RDF Delta.
+        This file is log4j XML, non-strict syntax.
+        http://logging.apache.org/log4j/2.x/manual/configuration.html#XML
+    -->
+
+    <Configuration status='INFO'>
+        <Appenders>
+            <Console name='STDOUT' target='SYSTEM_OUT'>
+                <PatternLayout pattern='[%d{yyyy-MM-dd HH:mm:ss}] %-10c{1} %-5p %m%n' />
+            </Console>
+            <Console name='PLAIN' target='SYSTEM_OUT'>
+                <PatternLayout pattern='%m%n' />
+            </Console>
+        </Appenders>
+        <Loggers>
+            <Root level='WARN'>
+                <AppenderRef ref='STDOUT' />
+            </Root>
+
+            <!-- Loggers for normal operation are 'Delta.*' -->
+            <Logger name='Delta' level='INFO'/>
+
+            <!-- Internal server logs. -->
+            <Logger name='org.seaborne.delta' level='INFO'/>
+            <Logger name='org.apache.jena' level='INFO'/>
+            <Logger name='org.apache..http.client' level='INFO'/>
+
+            <!-- Built-in zookeeper -->
+            <Logger name='org.apache.zookeeper' level='WARN'/>
+            <!-- Eclipse Jetty -->
+            <Logger name='org.eclipse.jetty'    level='WARN'/>
+
+            <!-- For Fuseki itself-->
+            <Logger name='org.apache.jena.fuseki.Server' level='INFO'/>
+            <Logger name='org.apache.jena.fuseki.Fuseki' level='INFO'/>
+
+            <!-- The NCSA request log -->
+            <Logger name='org.apache.jena.fuseki.Request'
+                    additivity='false' level='OFF'>
+                <AppenderRef ref='PLAIN'/>
+            </Logger>
+
+        </Loggers>
+    </Configuration>
+  fuseki-config.ttl: |-
+    ## Licensed under the terms of http://www.apache.org/licenses/LICENSE-2.0
+
+    PREFIX :        <#>
+    PREFIX fuseki:  <http://jena.apache.org/fuseki#>
+    PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX ja:      <http://jena.hpl.hp.com/2005/11/Assembler#>
+    PREFIX delta:   <http://jena.apache.org/rdf-delta#>
+
+    [] rdf:type fuseki:Server ;
+        fuseki:passwd  "password_file" ;
+        fuseki:auth    "basic" ;
+        fuseki:allowedUsers "{{ .Values.fusekiAdminUsername }}" ;
+        .
+
+    <#service1> rdf:type fuseki:Service ;
+        fuseki:name                        "ds" ;
+        fuseki:serviceQuery                "sparql" ;
+        fuseki:serviceQuery                "query" ;
+        fuseki:serviceUpdate               "update" ;
+        fuseki:serviceUpload               "upload" ;
+        fuseki:serviceReadWriteGraphStore  "data" ;
+        fuseki:serviceReadGraphStore       "get" ;
+        fuseki:dataset                     <#dataset> ;
+        .
+
+    <#dataset> rdf:type delta:DeltaDataset ;
+        ## List of Delta Patch Servers
+        delta:changes  ({{ $addresses }}) ;
+        ## Name of patch log
+        delta:patchlog "DeltaPatchLog";
+        ## Name of local directory used for the storage of Jena database and Delta client state.
+        delta:zone "Zone";
+        ## Choices: "mem", "tdb", "tdb2"
+        delta:storage "tdb2";
+        .
